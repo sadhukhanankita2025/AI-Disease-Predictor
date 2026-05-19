@@ -148,7 +148,7 @@ Open the URL shown in the terminal to use the app.
 - Make sure `healthcare_model.pkl` and `label_encoder.pkl` are present in the project root.
 - Update the `.csv` files if you want to change the recommendation data.
 
----
+-------
 
 
 
