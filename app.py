@@ -61,7 +61,6 @@ brain_image = get_base64_image("brain.png")
 # =========================================================
 # PDF REPORT
 # =========================================================
-
 def generate_report_pdf(
     patient_name,
     age,
@@ -76,30 +75,125 @@ def generate_report_pdf(
     workouts
 ):
 
+    import io
+    from datetime import datetime
+
+    from reportlab.platypus import (
+        SimpleDocTemplate,
+        Paragraph,
+        Spacer,
+        Table,
+        TableStyle,
+        KeepTogether
+    )
+
+    from reportlab.lib import colors
+    from reportlab.lib.styles import (
+        getSampleStyleSheet,
+        ParagraphStyle
+    )
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.enums import TA_CENTER, TA_LEFT
+    from reportlab.lib.units import inch
+
+    # -----------------------------------------------------
+    # CREATE BUFFER
+    # -----------------------------------------------------
+
     buffer = io.BytesIO()
 
     doc = SimpleDocTemplate(
         buffer,
-        pagesize=letter,
-        rightMargin=35,
-        leftMargin=35,
-        topMargin=40,
-        bottomMargin=40
+        pagesize=A4,
+        rightMargin=40,
+        leftMargin=40,
+        topMargin=45,
+        bottomMargin=45
     )
+
+    # -----------------------------------------------------
+    # STYLES
+    # -----------------------------------------------------
 
     styles = getSampleStyleSheet()
 
+    # Title Style
+    title_style = ParagraphStyle(
+        "CustomTitle",
+        parent=styles["Heading1"],
+        fontName="Helvetica-Bold",
+        fontSize=28,
+        leading=34,
+        alignment=TA_CENTER,
+        textColor=colors.HexColor("#0f172a"),
+        spaceAfter=6
+    )
+
+    # Subtitle Style
+    subtitle_style = ParagraphStyle(
+        "Subtitle",
+        parent=styles["Normal"],
+        fontName="Helvetica",
+        fontSize=11,
+        leading=16,
+        alignment=TA_CENTER,
+        textColor=colors.HexColor("#64748b"),
+        spaceAfter=20
+    )
+
+    # Section Title Style
+    section_style = ParagraphStyle(
+        "SectionTitle",
+        parent=styles["Heading2"],
+        fontName="Helvetica-Bold",
+        fontSize=16,
+        leading=20,
+        textColor=colors.white,
+        leftIndent=8,
+        spaceBefore=10,
+        spaceAfter=10
+    )
+
+    # Body Style
+    body_style = ParagraphStyle(
+        "BodyStyle",
+        parent=styles["BodyText"],
+        fontName="Helvetica",
+        fontSize=11,
+        leading=18,
+        textColor=colors.HexColor("#111827")
+    )
+
+    # Footer Style
+    footer_style = ParagraphStyle(
+        "FooterStyle",
+        parent=styles["Normal"],
+        fontName="Helvetica-Oblique",
+        fontSize=9,
+        leading=12,
+        alignment=TA_CENTER,
+        textColor=colors.HexColor("#6b7280")
+    )
+
+    # Disclaimer Style
+    disclaimer_style = ParagraphStyle(
+        "DisclaimerStyle",
+        parent=styles["Normal"],
+        fontName="Helvetica",
+        fontSize=9,
+        leading=14,
+        textColor=colors.HexColor("#7c2d12")
+    )
+
+    # -----------------------------------------------------
+    # STORY
+    # -----------------------------------------------------
+
     story = []
 
-    title_style = styles["Heading1"]
-
-    title_style.textColor = colors.HexColor("#2563eb")
-
-    title_style.fontSize = 30
-
-    title_style.leading = 35
-
-    title_style.alignment = 1
+    # -----------------------------------------------------
+    # HEADER
+    # -----------------------------------------------------
 
     story.append(
         Paragraph(
@@ -108,146 +202,184 @@ def generate_report_pdf(
         )
     )
 
-    story.append(Spacer(1, 25))
-
-    section_style = styles["Heading2"]
-
-    section_style.textColor = colors.HexColor("#1e40af")
-
     story.append(
         Paragraph(
-            "Patient Details",
-            section_style
+            "Comprehensive AI-generated medical recommendation report",
+            subtitle_style
         )
     )
 
-    story.append(Spacer(1, 10))
+    # Decorative line
+    line = Table([[""]], colWidths=[7.0 * inch])
+    line.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#2563eb")),
+        ("LINEBELOW", (0, 0), (-1, -1), 0, colors.white),
+    ]))
+    story.append(line)
+    story.append(Spacer(1, 20))
+
+    # -----------------------------------------------------
+    # PATIENT DETAILS
+    # -----------------------------------------------------
 
     patient_name = patient_name if patient_name else "Anonymous"
-
     bp = bp if bp else "N/A"
-
     symptoms_text = ", ".join(selected_symptoms)
 
+    # Section Header
+    header = Table([[" Patient Details"]], colWidths=[7.0 * inch])
+    header.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#1d4ed8")),
+        ("TEXTCOLOR", (0, 0), (-1, -1), colors.white),
+        ("FONTNAME", (0, 0), (-1, -1), "Helvetica-Bold"),
+        ("FONTSIZE", (0, 0), (-1, -1), 15),
+        ("TOPPADDING", (0, 0), (-1, -1), 10),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+        ("LEFTPADDING", (0, 0), (-1, -1), 8),
+    ]))
+    story.append(header)
+    story.append(Spacer(1, 8))
+
     info_data = [
-
         ["Patient Name", patient_name],
-
         ["Age", f"{age} Years"],
-
         ["Weight", f"{weight} kg"],
-
         ["Height", f"{height} cm"],
-
         ["Blood Pressure", bp],
-
         ["Symptoms", symptoms_text],
-
-        ["Predicted Disease", disease]
-
+        ["Predicted Disease", disease],
     ]
 
-    table = Table(
+    info_table = Table(
         info_data,
         colWidths=[180, 320]
     )
 
-    table.setStyle(TableStyle([
+    info_table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (0, -1), colors.HexColor("#eff6ff")),
+        ("TEXTCOLOR", (0, 0), (0, -1), colors.HexColor("#1e3a8a")),
+        ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
 
-        ("BACKGROUND", (0,0), (0,-1), colors.HexColor("#1e3a8a")),
+        ("BACKGROUND", (1, 0), (1, -1), colors.white),
+        ("TEXTCOLOR", (1, 0), (1, -1), colors.HexColor("#111827")),
 
-        ("TEXTCOLOR", (0,0), (-1,-1), colors.white),
+        ("GRID", (0, 0), (-1, -1), 0.5, colors.HexColor("#cbd5e1")),
 
-        ("BACKGROUND", (1,0), (1,-1), colors.HexColor("#2563eb")),
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
 
-        ("GRID", (0,0), (-1,-1), 1, colors.HexColor("#dbeafe")),
-
-        ("FONTNAME", (0,0), (-1,-1), "Helvetica-Bold"),
-
-        ("FONTSIZE", (0,0), (-1,-1), 12),
-
-        ("BOTTOMPADDING", (0,0), (-1,-1), 12),
-
-        ("TOPPADDING", (0,0), (-1,-1), 12),
-
-        ("VALIGN", (0,0), (-1,-1), "MIDDLE")
-
+        ("TOPPADDING", (0, 0), (-1, -1), 8),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+        ("LEFTPADDING", (0, 0), (-1, -1), 10),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 10),
     ]))
 
-    story.append(table)
+    story.append(info_table)
+    story.append(Spacer(1, 18))
 
-    story.append(Spacer(1, 28))
-
-    body_style = styles["BodyText"]
-
-    body_style.fontSize = 12
-
-    body_style.leading = 22
-
-    body_style.textColor = colors.HexColor("#111827")
+    # -----------------------------------------------------
+    # SECTION FUNCTION
+    # -----------------------------------------------------
 
     def add_section(title, items):
 
-        story.append(
-            Paragraph(
-                title,
-                section_style
-            )
+        # Section Header Bar
+        section_header = Table(
+            [[title]],
+            colWidths=[7.0 * inch]
         )
 
-        story.append(Spacer(1, 10))
+        section_header.setStyle(TableStyle([
+            ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#0f172a")),
+            ("TEXTCOLOR", (0, 0), (-1, -1), colors.white),
+            ("FONTNAME", (0, 0), (-1, -1), "Helvetica-Bold"),
+            ("FONTSIZE", (0, 0), (-1, -1), 13),
+            ("TOPPADDING", (0, 0), (-1, -1), 8),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            ("LEFTPADDING", (0, 0), (-1, -1), 10),
+        ]))
+
+        story.append(section_header)
+        story.append(Spacer(1, 8))
 
         if len(items) == 0:
-
             story.append(
                 Paragraph(
-                    "No data available.",
+                    "No recommendations available.",
                     body_style
                 )
             )
-
         else:
-
             for item in items:
-
                 story.append(
                     Paragraph(
-                        f"• {item}",
+                        f"• {str(item)}",
                         body_style
                     )
                 )
+                story.append(Spacer(1, 4))
 
-                story.append(Spacer(1, 6))
+        story.append(Spacer(1, 14))
 
-        story.append(Spacer(1, 18))
+    # -----------------------------------------------------
+    # SECTIONS
+    # -----------------------------------------------------
 
     add_section("💊 Recommended Medicines", medicines)
-
     add_section("🛡 Precautions", precautions)
-
     add_section("🥗 Diet Recommendation", diets)
-
     add_section("🏋 Workout Plan", workouts)
 
-    footer_style = styles["Italic"]
+    # -----------------------------------------------------
+    # DISCLAIMER
+    # -----------------------------------------------------
 
-    footer_style.textColor = colors.grey
+    disclaimer_table = Table(
+        [[
+            Paragraph(
+                "<b>Medical Disclaimer:</b> "
+                "This report is generated using an AI-based prediction model "
+                "and is intended for informational purposes only. "
+                "Please consult a qualified healthcare professional "
+                "before taking any medication or making medical decisions.",
+                disclaimer_style
+            )
+        ]],
+        colWidths=[7.0 * inch]
+    )
 
-    footer_style.fontSize = 10
+    disclaimer_table.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#fff7ed")),
+        ("BOX", (0, 0), (-1, -1), 1, colors.HexColor("#fdba74")),
+        ("TOPPADDING", (0, 0), (-1, -1), 12),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 12),
+        ("LEFTPADDING", (0, 0), (-1, -1), 12),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 12),
+    ]))
 
-    story.append(Spacer(1, 30))
+    story.append(disclaimer_table)
+    story.append(Spacer(1, 24))
+
+    # -----------------------------------------------------
+    # FOOTER
+    # -----------------------------------------------------
+
+    generated_time = datetime.now().strftime("%d %B %Y, %I:%M %p")
 
     story.append(
         Paragraph(
-            "Generated by AI Personalized Healthcare System",
+            f"Generated by AI Personalized Healthcare System<br/>"
+            f"Report Generated On: {generated_time}",
             footer_style
         )
     )
 
+    # -----------------------------------------------------
+    # BUILD PDF
+    # -----------------------------------------------------
+
     doc.build(story)
 
     pdf = buffer.getvalue()
-
     buffer.close()
 
     return pdf
