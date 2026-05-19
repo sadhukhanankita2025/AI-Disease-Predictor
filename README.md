@@ -150,7 +150,5 @@ Open the URL shown in the terminal to use the app.
 
 ---
 
-## 📄 License
 
-This project is released under the MIT License.
 
