@@ -152,4 +152,14 @@ Open the URL shown in the terminal to use the app.
 
 
 
+---
+
+## 🌐 Live Demo
+
+🚀 **Try the Application Online:**  
+
+https://ai-disease-predictor-cknie3tvx6gklujdd4ifl7.streamlit.app/
+
+
+
 
