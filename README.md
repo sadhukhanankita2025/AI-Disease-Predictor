@@ -113,7 +113,37 @@ Open the URL shown in the terminal to use the app.
 
 ---
 
-## 📌 Notes
+## � Project Screenshots
+
+### 🏠 Home Page
+
+<p align="center">
+  <img src="assets/image.png" width="700" />
+</p>
+
+### 🧠 Prediction Page
+
+<p align="center">
+  <img src="assets/image2.png" width="700" />
+</p>
+
+### 📄 Report Page
+
+<p align="center">
+  <img src="assets/image3.png" width="700" />
+</p>
+
+<p align="center">
+  <img src="assets/image4.png" width="700" />
+</p>
+
+<p align="center">
+  <img src="assets/image5.png" width="700" />
+</p>
+
+---
+
+## �📌 Notes
 
 - Make sure `healthcare_model.pkl` and `label_encoder.pkl` are present in the project root.
 - Update the `.csv` files if you want to change the recommendation data.
