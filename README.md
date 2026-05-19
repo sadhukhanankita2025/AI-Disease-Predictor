@@ -7,11 +7,6 @@
 
 An AI-powered **healthcare web application** that predicts possible diseases based on user symptoms and provides **personalized medical guidance**, including medicines, precautions, diet plans, workout suggestions, and downloadable reports.
 
----
-
-## 🚀 Live Demo
-*(If deployed, add your link here)*  
-👉 https://your-streamlit-app-link.com
 
 ---
 
@@ -56,14 +51,21 @@ An AI-powered **healthcare web application** that predicts possible diseases bas
 ---
 
 ## 📁 Project Structure
-AI-Disease-Predictor/
+HEALTHCARE-AI/
 │
-├── app.py # Main Streamlit application
-├── model.pkl # Trained ML model
-├── symptoms_dict.pkl # Symptom mapping (if used)
-├── label_encoder.pkl # Encoded labels
-├── requirements.txt # Project dependencies
-├── README.md # Project documentation
+├── __pycache__/             # Compiled Python bytecode files
+├── app.py                   # Main application entry point (Streamlit/Flask/FastAPI)
+├── brain.png                # Asset/Image used in the application UI
+├── diets.csv                # Dataset containing dietary recommendations
+├── healthcare_model.pkl     # Trained machine learning model file
+├── image.png                # Asset/Image used in the application UI
+├── label_encoder.pkl        # Pickle file for encoding/decoding categorical labels
+├── medications.csv          # Dataset containing medication recommendations
+├── precautions_df.csv       # Dataset containing medical precaution details
+├── README.md                # Project documentation (this file)
+├── requirements.txt         # List of Python dependencies and packages
+├── Training.csv             # Dataset used for training the model
+└── workout_df.csv           # Dataset containing workout/exercise recommendations
 ---
 
 ## ⚙️ Installation Guide
@@ -114,3 +116,32 @@ Predicted Disease: Diabetes
 - Walking 30 mins daily
 - Light cardio exercises
 📸 UI Preview
+ ## 📸 Project Screenshots
+
+### 🏠 Home Page
+<p align="center">
+  <img src="assets/image.png" width="700"/>
+</p>
+
+---
+
+### 🧠 Prediction Page
+<p align="center">
+  <img src="assets/image2.png" width="700"/>
+</p>
+
+---
+
+### 📄 Report Page
+
+<p align="center">
+  <img src="assets/image3.png" width="700"/>
+</p>
+
+<p align="center">
+  <img src="assets/image4.png" width="700"/>
+</p>
+
+<p align="center">
+  <img src="assets/image5.png" width="700"/>
+</p>
