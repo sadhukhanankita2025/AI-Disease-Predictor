@@ -689,16 +689,24 @@ div.stFormSubmitButton {{
 
     justify-content: center;
 
+    align-items: center;
+
     margin-top: 18px;
 }}
 
 div.stFormSubmitButton > button {{
 
-    width: 300px;
+    width: 320px;
+
+    max-width: 100%;
 
     height: 60px;
 
-    display: block;
+    display: inline-flex;
+
+    justify-content: center;
+
+    align-items: center;
 
     margin: 0 auto;
 
@@ -719,6 +727,9 @@ div.stFormSubmitButton > button {{
     font-size: 20px;
 
     font-weight: 800;
+
+    box-shadow:
+    0 14px 30px rgba(59,130,246,0.30);
 }}
 
 /* =====================================================
