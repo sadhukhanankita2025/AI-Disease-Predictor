@@ -683,7 +683,10 @@ INPUT FIELDS
 BUTTON
 ===================================================== */
 
-div.stFormSubmitButton {{
+div.stFormSubmitButton,
+div.stButton,
+.stButton,
+.stFormSubmitButton {{
 
     display: flex;
 
@@ -694,7 +697,10 @@ div.stFormSubmitButton {{
     margin-top: 18px;
 }}
 
-div.stFormSubmitButton > button {{
+div.stFormSubmitButton > button,
+div.stButton > button,
+.stButton > button,
+button[kind="primary"] {{
 
     width: 320px;
 
@@ -720,9 +726,9 @@ div.stFormSubmitButton > button {{
         #1d4ed8,
         #2563eb,
         #3b82f6
-    );
+    ) !important;
 
-    color: white;
+    color: white !important;
 
     font-size: 20px;
 
