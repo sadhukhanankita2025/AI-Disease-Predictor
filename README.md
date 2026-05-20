@@ -9,6 +9,44 @@ An AI-powered Streamlit application that predicts possible diseases from user-se
 
 ---
 
+## � Project Screenshots
+
+### 🏠 Home Page
+
+<p align="center">
+  <img src="assets/image.png" width="700" />
+</p>
+
+### 🧠 Prediction Page
+
+<p align="center">
+  <img src="assets/image2.png" width="700" />
+</p>
+
+### 📄 Report Page
+
+<p align="center">
+  <img src="assets/image3.png" width="700" />
+</p>
+
+<p align="center">
+  <img src="assets/image4.png" width="700" />
+</p>
+
+<p align="center">
+  <img src="assets/image5.png" width="700" />
+</p>
+
+---
+
+## 🌐 Live Demo
+
+🚀 **Try the Application Online:**  
+
+https://ai-disease-predictor-cknie3tvx6gklujdd4ifl7.streamlit.app/
+
+---
+
 ## 📌 Features
 
 - 🧠 Disease prediction from symptoms using a trained machine learning model
@@ -110,36 +148,6 @@ Open the URL shown in the terminal to use the app.
 - Precautions: `Avoid sugar`, `Monitor glucose levels`
 - Diet: `High fiber`, `Low carbs`
 - Workout: `30 minutes walking daily`
-
----
-
-## � Project Screenshots
-
-### 🏠 Home Page
-
-<p align="center">
-  <img src="assets/image.png" width="700" />
-</p>
-
-### 🧠 Prediction Page
-
-<p align="center">
-  <img src="assets/image2.png" width="700" />
-</p>
-
-### 📄 Report Page
-
-<p align="center">
-  <img src="assets/image3.png" width="700" />
-</p>
-
-<p align="center">
-  <img src="assets/image4.png" width="700" />
-</p>
-
-<p align="center">
-  <img src="assets/image5.png" width="700" />
-</p>
 
 ---
 
